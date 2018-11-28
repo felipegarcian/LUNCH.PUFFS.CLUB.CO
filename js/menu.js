@@ -8,10 +8,17 @@ var menuState =
 			fill: '#ffffff'}
 			);*/
 
+		var messageLabel = game.add.text
+			(game.world.centerX - 125, game.world.height - 160,
+			message,
+			{font: '25px VT323',
+			fill: '#ffffff'}
+			);
+
 		var startLabel = game.add.text
 			(game.world.centerX - 125, game.world.height - 80,
 			'Press space bar to start',
-			{font: '25px Arial',
+			{font: '25px VT323',
 			fill: '#ffffff'}
 			);
 
@@ -26,7 +33,8 @@ var menuState =
 
 	start: function()
 	{
-		game.state.start('pigeon');
+		ratTime = 0;
+		game.state.start('rat');
 	},
 
 };

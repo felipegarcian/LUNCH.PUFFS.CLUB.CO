@@ -7,7 +7,7 @@ var loadState =
 
 		//RAT
 		game.load.image("floor", "assets/images/floor.png");
-        game.load.image("car", "assets/images/mouse.png");
+        game.load.image("rat", "assets/images/mouse.png");
         game.load.image("obstacle", "assets/images/obstacle.png");
 
         //PIGEON

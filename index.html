@@ -8,6 +8,15 @@
 			padding:0px;
 			margin:0px;
 		}
+		@font-face {
+      		font-family: 'VT323'; src: url('assets/fonts/VT323-Regular.ttf');
+    	}
+    	#preload-font {
+      		font-family: 'VT323';
+      		text-indent: -9999px;
+      		font-size: 0;
+    	}
+
 	</style>
 	<script src="phaser.min.js"></script>
 	<script src = "js/boot.js"></script>
@@ -18,5 +27,6 @@
     <script src = "js/game.js"></script>
 	</head>
 	<body>
+		<span id="preload-font"></span>
 	</body>
 </html>

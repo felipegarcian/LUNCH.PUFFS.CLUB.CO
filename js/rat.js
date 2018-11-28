@@ -1,6 +1,6 @@
-var car;
-var carColor = 0xff0000;
-var carTurnSpeed = 250;
+var rat;
+var ratColor = 0xff0000;
+var ratTurnSpeed = 250;
 
 var obstacleGroup;
 
@@ -23,15 +23,15 @@ var ratState =
          obstacleGroup = game.add.group();
          cursors = this.input.keyboard.createCursorKeys();
 
-         car = game.add.sprite(game.width / 2, game.height - 40, "car");
-         car.positions = [game.width / 6, game.width  / 2 , game.width - (game.width / 6)];
-         car.anchor.set(0.5);
-         car.canMove = true;
-         car.side = 1;
-         car.x = car.positions[car.side];
-         game.physics.enable(car, Phaser.Physics.ARCADE);
-         car.body.allowRotation = false;
-         car.body.moves = false;
+         rat = game.add.sprite(game.width / 2, game.height - 40, "rat");
+         rat.positions = [game.width / 6, game.width  / 2 , game.width - (game.width / 6)];
+         rat.anchor.set(0.5);
+         rat.canMove = true;
+         rat.side = 1;
+         rat.x = rat.positions[rat.side];
+         game.physics.enable(rat, Phaser.Physics.ARCADE);
+         rat.body.allowRotation = false;
+         rat.body.moves = false;
 
 
          game.time.events.loop(obstacleDelay, function(){
@@ -43,8 +43,10 @@ var ratState =
          game.time.events.add(Phaser.Timer.SECOND * 5, switchToRat, this);
     },
     update: function(){
-         game.physics.arcade.collide(car, obstacleGroup, function(){
-              game.state.start("rat");
+         game.physics.arcade.collide(rat, obstacleGroup, function(){
+
+            message = "You  lose!";
+            game.state.start("menu");
          });
 
          if (cursors.left.isDown)
@@ -60,28 +62,28 @@ var ratState =
 
 function moveCarLeft(){
 
-    if(car.canMove){
-         car.canMove = false;
-         car.side = (car.side - 1 > 0 ? car.side - 1 : 0);
-         var moveTween = game.add.tween(car).to({
-              x: car.positions[car.side],
-         }, carTurnSpeed, Phaser.Easing.Linear.None, true);
+    if(rat.canMove){
+         rat.canMove = false;
+         rat.side = (rat.side - 1 > 0 ? rat.side - 1 : 0);
+         var moveTween = game.add.tween(rat).to({
+              x: rat.positions[rat.side],
+         }, ratTurnSpeed, Phaser.Easing.Linear.None, true);
          moveTween.onComplete.add(function(){
-              car.canMove = true;
+              rat.canMove = true;
          })
     }
 }
 
 function moveCarRight(){
 
-    if(car.canMove){
-         car.canMove = false;
-         car.side = (car.side + 1 > 0 ? car.side + 1 : 0);
-         var moveTween = game.add.tween(car).to({
-              x: car.positions[car.side],
-         }, carTurnSpeed, Phaser.Easing.Linear.None, true);
+    if(rat.canMove){
+         rat.canMove = false;
+         rat.side = (rat.side + 1 > 0 ? rat.side + 1 : 0);
+         var moveTween = game.add.tween(rat).to({
+              x: rat.positions[rat.side],
+         }, ratTurnSpeed, Phaser.Easing.Linear.None, true);
          moveTween.onComplete.add(function(){
-              car.canMove = true;
+              rat.canMove = true;
          })
     }
 }
@@ -91,7 +93,6 @@ Obstacle = function (game) {
     Phaser.Sprite.call(this, game, game.width * (position * 2 + 1) / 6, -20, "obstacle");
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.anchor.set(0.5);
-    this.tint = carColor;
 };
 
 Obstacle.prototype = Object.create(Phaser.Sprite.prototype);
