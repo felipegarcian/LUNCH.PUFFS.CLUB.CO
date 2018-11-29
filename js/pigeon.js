@@ -22,13 +22,13 @@ var pigeonState =
         //this.grass = this.add.tileSprite(0,this.game.height-100,this.game.world.width,70,'grass');
         this.ground = this.add.tileSprite(0,this.game.height-70,this.game.world.width,70,'ground');
         
-        this.sky = this.add.tileSprite(0,0,this.game.world.width,50,'ground');
+        this.sky = this.add.tileSprite(0,0,this.game.world.width,50,'sky');
         //this.ground1 = this.add.tileSprite(0,this.game.height-70,this.game.world.width,70,'ground1');
 
 
 
         //create player and walk animation
-        this.player = this.game.add.sprite(this.game.width/2, this.game.height/2, 'dog');
+        this.player = this.game.add.sprite(this.game.width/2, this.game.height/2, 'pigeon');
         this.player.animations.add('walk');
         
         //create the fleas
@@ -98,34 +98,11 @@ var pigeonState =
         this.stopped = false;
         this.maxScratches = 5;
         
-        //create an array of possible toys that can be gathered from toy mounds
-        var bone = this.game.add.sprite(0, this.game.height-130, 'bone');
-        var ball = this.game.add.sprite(0, this.game.height-130, 'ball');
-        bone.visible = false;
-        ball.visible = false;
-        this.toys = [bone, ball];
-        this.currentToy = bone;
-        
-        //stats
-       /* var style1 = { font: "20px Arial", fill: "#ff0"};
-        var t1 = this.game.add.text(10, 20, "Points:", style1);
-        var t2 = this.game.add.text(this.game.width-300, 20, "Remaining Flea Scratches:", style1);
-        t1.fixedToCamera = true;
-        t2.fixedToCamera = true;
 
-        var style2 = { font: "26px Arial", fill: "#00ff00"};
-        this.pointsText = this.game.add.text(80, 18, "", style2);
-        this.fleasText = this.game.add.text(this.game.width-50, 18, "", style2);
-        this.refreshStats();
-        this.pointsText.fixedToCamera = true;
-        this.fleasText.fixedToCamera = true;
-        */
     },
     update: function(){
     this.game.physics.arcade.collide(this.player, this.ground, this.playerHit, null, this);
     this.game.physics.arcade.collide(this.player, this.fleas, this.playerBit, null, this);
-    //this.game.physics.arcade.overlap(this.player, this.mounds, this.collect, this.checkDig, this);
-    
     this.game.physics.arcade.collide(this.player, this.sky, this.playerHit, null, this);
 
     //only respond to keys and keep the speed if the player is alive
@@ -171,11 +148,11 @@ var pigeonState =
       if (this.game.input.activePointer.leftButton.isDown){
 
           this.playerJump();
-        }
+      }
     
       //The game world is infinite in the x-direction, so we wrap around.
       //We subtract padding so the player will remain in the middle of the screen when
-        //wrapping, rather than going to the end of the screen first.
+      //wrapping, rather than going to the end of the screen first.
       this.game.world.wrap(this.player, -(this.game.width/2), false, true, false);
     }
 
@@ -189,10 +166,10 @@ refreshStats: function() {
 
   playerHit: function(player, blockedLayer) {
     if(player.body.touching.up) {
-      this.game.state.start('pigeon');//can add other functionality here for extra obstacles later
+      this.game.time.events.add(1500, this.gameOver, this);//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.down) {
-     this.game.state.start('pigeon');// alert("piso");//can add other functionality here for extra obstacles later
+     this.game.time.events.add(1500, this.gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.right) {
       //can add other functionality here for extra obstacles later

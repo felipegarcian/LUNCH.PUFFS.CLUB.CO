@@ -13,10 +13,11 @@ var loadState =
         //PIGEON
 
 	    //load game assets
-	    game.load.spritesheet('dog', 'assets/images/dog_walk.png', 122, 92, 2);
+	    game.load.spritesheet('pigeon', 'assets/images/dog_walk.png', 122, 92, 2);
 	    game.load.spritesheet('playerScratch', 'assets/images/dog_scratch.png', 116, 100, 2);
 	    game.load.spritesheet('playerDig', 'assets/images/dog_dig.png', 129, 100, 2);
 	    game.load.image('ground', 'assets/images/ground.png');
+	    game.load.image('sky', 'assets/images/ground.png');
 	    game.load.image('grass', 'assets/images/grass.png');
 	    game.load.audio('whine', ['assets/audio/whine.ogg', 'assets/audio/whine.mp3']);
 	    game.load.audio('bark', ['assets/audio/bark.ogg', 'assets/audio/bark.mp3']);
@@ -28,10 +29,10 @@ var loadState =
 	    game.load.image('flea', 'assets/images/flea.png');
 	    
 	    //https://openclipart.org/detail/188266/bone:
-	    game.load.image('bone', 'assets/images/toys/bone.png');
+	    //game.load.image('bone', 'assets/images/toys/bone.png');
 	    
 	    //https://openclipart.org/detail/139615/tennis-ball:
-	    game.load.image('ball', 'assets/images/toys/tennisball.png');
+	    //game.load.image('ball', 'assets/images/toys/tennisball.png');
 
 	},
 
