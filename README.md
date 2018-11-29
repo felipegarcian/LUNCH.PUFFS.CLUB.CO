@@ -1,10 +1,13 @@
 # LUNCH.PUFFS.CLUB.CO
 Repository for games of LUNCH PUFFS CLUB CO.
 Autors: 
+
 Developers 
-            Eliana López - https://github.com/elianalopezv 
-            Felipe Garcia - https://github.com/felipegarcian
+
+            Eliana López - 3lianalopez@gmail.com -  https://github.com/elianalopezv 
+            Felipe Garcia - felipegarcian@gmail.com - https://github.com/felipegarcian
 Designer 
+
             Juan David Pulido
 
 # Made With Phaser CE (Community Edition)
