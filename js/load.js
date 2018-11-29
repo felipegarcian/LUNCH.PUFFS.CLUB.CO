@@ -11,9 +11,8 @@ var loadState =
         game.load.image("obstacle", "assets/images/obstacle.png");
 
         //PIGEON
-
 	    //load game assets
-	    game.load.spritesheet('pigeon', 'assets/images/dog_walk.png', 122, 92, 2);
+	    game.load.spritesheet('pigeon', 'assets/images/pigeon-fly.png', 122, 92, 2);
 	    game.load.spritesheet('playerScratch', 'assets/images/dog_scratch.png', 116, 100, 2);
 	    game.load.spritesheet('playerDig', 'assets/images/dog_dig.png', 129, 100, 2);
 	    game.load.image('ground', 'assets/images/ground.png');
@@ -27,12 +26,6 @@ var loadState =
 	    
 	    //Adapted from https://openclipart.org/detail/6570/flea:
 	    game.load.image('flea', 'assets/images/flea.png');
-	    
-	    //https://openclipart.org/detail/188266/bone:
-	    //game.load.image('bone', 'assets/images/toys/bone.png');
-	    
-	    //https://openclipart.org/detail/139615/tennis-ball:
-	    //game.load.image('ball', 'assets/images/toys/tennisball.png');
 
 	},
 
