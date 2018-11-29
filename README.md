@@ -1,11 +1,19 @@
 # LUNCH.PUFFS.CLUB.CO
-Repository for games of LUNCH PUFFS CLUB CO. 
+Repository for games of LUNCH PUFFS CLUB CO.
+Autors: 
+Developers 
+            Eliana López - https://github.com/elianalopezv 
+            Felipe Garcia - https://github.com/felipegarcian
+Designer 
+            Juan David Pulido
 
 # Made With Phaser CE (Community Edition)
 
+Pigeon part build following the tutorial of Kristen Dyrr "How to Make an Infinitely Scrolling Game with Phaser" https://gamedevacademy.org/how-to-make-an-infinitely-scrolling-game-with-phaser/ 
+
 # License
 
-Copyright [2018] [LUNCH PUFFS CLUB CO]
+Copyright 2018 LUNCH PUFFS CLUB CO.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
