@@ -1,4 +1,4 @@
-var menuState = 
+var endState = 
 {
 	create: function()
 	{

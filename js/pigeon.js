@@ -96,7 +96,7 @@ var pigeonState =
         this.stopped = false;
         this.maxScratches = 5;
         
-        this.game.time.events.add(Phaser.Timer.SECOND * 5, switchTo, this);
+        this.game.time.events.add(Phaser.Timer.SECOND * game.rnd.integerInRange(5, 10), switchTo, this);
     },
     update: function(){
     this.game.physics.arcade.collide(this.player, this.ground, this.playerHit, null, this);
@@ -199,7 +199,7 @@ refreshStats: function() {
   },
 
   gameOver: function() {
-    message = "You  lose!";
+    message = "Your time: " + (game.time.totalElapsedSeconds() - menuTime).toFixed(2) + "s";
     this.game.state.start("menu");
 
     //this.game.state.start('pigeon');
