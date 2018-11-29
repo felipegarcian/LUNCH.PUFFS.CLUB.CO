@@ -33,8 +33,6 @@ var pigeonState =
         
         //create the fleas
         this.generateFleas();
-        //and the toy mounds
-        //this.generateMounds();
         
         //put everything in the correct order (the grass will be camoflauge),
         //but the toy mounds have to be above that to be seen, but behind the
@@ -98,7 +96,7 @@ var pigeonState =
         this.stopped = false;
         this.maxScratches = 5;
         
-
+        this.game.time.events.add(Phaser.Timer.SECOND * 5, switchTo, this);
     },
     update: function(){
     this.game.physics.arcade.collide(this.player, this.ground, this.playerHit, null, this);
@@ -166,10 +164,10 @@ refreshStats: function() {
 
   playerHit: function(player, blockedLayer) {
     if(player.body.touching.up) {
-      this.game.time.events.add(1500, this.gameOver, this);//can add other functionality here for extra obstacles later
+      this.game.time.events.add(0, this.gameOver, this);//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.down) {
-     this.game.time.events.add(1500, this.gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
+     this.game.time.events.add(0, this.gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.right) {
       //can add other functionality here for extra obstacles later
@@ -201,7 +199,10 @@ refreshStats: function() {
   },
 
   gameOver: function() {
-    this.game.state.start('pigeon');
+    message = "You  lose!";
+    this.game.state.start("menu");
+
+    //this.game.state.start('pigeon');
   },
 
   checkDig: function() {
@@ -234,7 +235,7 @@ refreshStats: function() {
       this.mounds.destroy();
 
       //We switch back to the standing version of the player
-      this.player.loadTexture('dog');
+      this.player.loadTexture('pigeon');
       this.player.animations.play('walk', 10, true); //frame rate is faster for running
       this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
       
@@ -250,7 +251,7 @@ refreshStats: function() {
       this.game.time.events.add(1500, this.gameOver, this);
     } else {
       //change image and update the body size for the physics engine
-      this.player.loadTexture('dog');
+      this.player.loadTexture('pigeon');
       this.player.animations.play('walk', 3, true);
       this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
     }
@@ -317,7 +318,15 @@ refreshStats: function() {
     {
         //this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Courier");   
 
-    }
-
+    }/*, 
+    switchToRat: function()
+    {
+    this.game.state.start('rat');
+    //game.state.start("pigeon");
+    }*/
 };
-
+function switchTo() {
+    //if (change){
+    game.state.start("rat");
+//}
+}

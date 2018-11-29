@@ -30,6 +30,12 @@ var menuState =
 		spaceKey.onDown.addOnce(this.start, this);
 
 	},
+    update: function(){
+        if (!game.isRunning){
+        	var logo = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logo");
+			logo.anchor.setTo(0.5);
+			} 
+	},
 
 	start: function()
 	{
