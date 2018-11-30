@@ -1,5 +1,6 @@
 var game = new Phaser.Game(600, 600, Phaser.AUTO, "");
 var message = "";
+var menuTime = 0;
 var ratTime = 0;
 
 game.state.add('boot', bootState);

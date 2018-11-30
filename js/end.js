@@ -1,5 +1,4 @@
-var firstTime; 
-var menuState = 
+var endState = 
 {
 	create: function()
 	{
@@ -33,10 +32,10 @@ var menuState =
 
 	},
     update: function(){
-        if (firstTime!=null){
+        if (!game.isRunning){
         	var logo = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logo");
 			logo.anchor.setTo(0.5);
-			} else {firstTime = false;}
+			} 
 	},
 
 	start: function()

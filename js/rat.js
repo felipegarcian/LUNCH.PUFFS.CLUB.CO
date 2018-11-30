@@ -40,12 +40,12 @@ var ratState =
               obstacleGroup.add(obstacle);
          });
 
-         game.time.events.add(Phaser.Timer.SECOND * 5, switchToRat, this);
+         game.time.events.add(Phaser.Timer.SECOND * game.rnd.integerInRange(5, 10), switchToPigeon, this);
     },
     update: function(){
          game.physics.arcade.collide(rat, obstacleGroup, function(){
 
-            message = "You  lose!";
+            message = "Your time: " + (game.time.totalElapsedSeconds() - menuTime).toFixed(2) + "s";
             game.state.start("menu");
          });
 
@@ -105,7 +105,7 @@ Obstacle.prototype.update = function() {
     }
 };
 
-function switchToRat() {
+function switchToPigeon() {
 
     game.state.start("pigeon");
 
