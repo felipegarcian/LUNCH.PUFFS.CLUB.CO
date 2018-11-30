@@ -3,6 +3,7 @@ var menuState =
 {
 	create: function()
 	{
+		this.game.world.setBounds(0, 0, this.game.width , this.game.height);
 		/*var nameLabel = game.add.text
 			(80,80, 'RataPaloma :D',
 			{font: '50px Arial',
@@ -43,7 +44,7 @@ var menuState =
 	{
 		ratTime = 0;
 		menuTime = game.time.totalElapsedSeconds();
-		game.state.start('rat');
+		game.state.start('pigeon');
 	},
 
 };

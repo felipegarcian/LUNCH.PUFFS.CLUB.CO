@@ -1,51 +1,36 @@
-var car;
-var carColor = 0xff0000;
-var carTurnSpeed = 250;
-
-var obstacleGroup;
-
-var obstacleSpeed = 500;
-var obstacleDelay = 350;
-
-var road;
-
-
-
-
 var pigeonState =
 {
      create: function(){
          //set up background and ground layer
         this.game.world.setBounds(0, 0, 3500 , this.game.height);
-        
-
-        //this.grass = this.add.tileSprite(0,this.game.height-100,this.game.world.width,70,'grass');
+        this.background1 = this.add.tileSprite(0,0,this.game.world.width,600,'sky1');
         this.ground = this.add.tileSprite(0,this.game.height-70,this.game.world.width,70,'ground');
-        
         this.sky = this.add.tileSprite(0,0,this.game.world.width,50,'sky');
-        //this.ground1 = this.add.tileSprite(0,this.game.height-70,this.game.world.width,70,'ground1');
-
-
-
-        //create player and walk animation
-        this.player = this.game.add.sprite(this.game.width/2, this.game.height/2, 'pigeon');
-        this.player.animations.add('walk');
         
-        //create the fleas
-        this.generateFleas();
+        //create player and fly animation
+        this.player = this.game.add.sprite(this.game.width/2, this.game.height/2, 'pigeon-fly');
+        this.player.animations.add('fly');
+        
+        //create the Cats in the top and buttom of the screen
+        this.generateCats();
+        this.generateCatsDown();
+
         
         //put everything in the correct order (the grass will be camoflauge),
         //but the toy mounds have to be above that to be seen, but behind the
         //ground so they barely stick up
-       // this.game.world.bringToTop(this.grass);
-        //this.game.world.bringToTop(this.mounds);
+        this.game.world.bringToTop(this.background1);
+        
         this.game.world.bringToTop(this.ground);
         this.game.world.bringToTop(this.sky);
-
+        
+        this.game.world.bringToTop(this.player);
         //enable physics on the player, sky and ground
         this.game.physics.arcade.enable(this.player);
+
         this.game.physics.arcade.enable(this.ground);
         this.game.physics.arcade.enable(this.sky);
+        //this.game.physics.arcade.enable(this.background1);
         //player gravity
         this.player.body.gravity.y = 1000;
         
@@ -72,8 +57,8 @@ var pigeonState =
         //the camera will follow the player in the world
         this.game.camera.follow(this.player);
         
-        //play the walking animation
-        this.player.animations.play('walk', 3, true);
+        //play the flying animation
+        this.player.animations.play('fly', 10, true);
 
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -88,19 +73,14 @@ var pigeonState =
         this.barkSound = this.game.add.audio('bark');
         this.whineSound = this.game.add.audio('whine');
         
-        //set some variables we need throughout the game
-        this.scratches = 0;
-        this.wraps = 0;
-        this.points = 0;
-        this.wrapping = true;
-        this.stopped = false;
-        this.maxScratches = 5;
         
         this.game.time.events.add(Phaser.Timer.SECOND * game.rnd.integerInRange(5, 10), switchTo, this);
     },
     update: function(){
+    
     this.game.physics.arcade.collide(this.player, this.ground, this.playerHit, null, this);
-    this.game.physics.arcade.collide(this.player, this.fleas, this.playerBit, null, this);
+    this.game.physics.arcade.collide(this.player, this.cats, this.playerBit, null, this);
+    this.game.physics.arcade.collide(this.player, this.catsD, this.playerBit, null, this);
     this.game.physics.arcade.collide(this.player, this.sky, this.playerHit, null, this);
 
     //only respond to keys and keep the speed if the player is alive
@@ -118,18 +98,29 @@ var pigeonState =
         //We only want to destroy and regenerate once per wrap, so we test with wrapping var
         this.wrapping = true;
         
-        this.fleas.destroy();
-        this.generateFleas();
-        //this.mounds.destroy();
-        //this.generateMounds();
+        this.cats.destroy();
+        this.catsD.destroy();
+        this.generateCats();
+        this.generateCatsDown();
         
         //put everything back in the proper order
+        this.game.world.bringToTop(this.background1);
         //this.game.world.bringToTop(this.grass);
         //this.game.world.bringToTop(this.mounds);
+        this.game.world.bringToTop(this.cats);
+        this.game.world.bringToTop(this.catsD);
+        
         this.game.world.bringToTop(this.ground);
+        
         this.game.world.bringToTop(this.sky);
-         
+        
+        
+        this.game.world.bringToTop(this.player);
+
+           
       }
+         
+
       else if(this.player.x >= this.game.width) {
         this.wrapping = false;
       }
@@ -155,7 +146,7 @@ var pigeonState =
     }
 
 
-},
+  },
 
 refreshStats: function() {
     /*this.pointsText.text = this.points;
@@ -164,10 +155,10 @@ refreshStats: function() {
 
   playerHit: function(player, blockedLayer) {
     if(player.body.touching.up) {
-      this.game.time.events.add(0, this.gameOver, this);//can add other functionality here for extra obstacles later
+      this.game.time.events.add(0, gameOver, this);//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.down) {
-     this.game.time.events.add(0, this.gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
+     this.game.time.events.add(0, gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
     }
     if(player.body.touching.right) {
       //can add other functionality here for extra obstacles later
@@ -177,9 +168,11 @@ refreshStats: function() {
     }
   },
 
-  playerBit: function(player, flea) {
+  playerBit: function(player, catBit) {
     //remove the flea that bit our player so it is no longer in the way
-    flea.destroy();
+    catBit.destroy();
+   
+    
     
     //update our stats
     this.scratches++;
@@ -197,14 +190,6 @@ refreshStats: function() {
     this.player.body.velocity.x = 0;
     this.game.time.events.add(Phaser.Timer.SECOND * 2, this.playerScratch, this);
   },
-
-  gameOver: function() {
-    message = "Your time: " + (game.time.totalElapsedSeconds() - menuTime).toFixed(2) + "s";
-    this.game.state.start("menu");
-
-    //this.game.state.start('pigeon');
-  },
-
   checkDig: function() {
     if (this.cursors.down.isDown || (this.swipe.isDown && (this.swipe.position.y > this.swipe.positionDown.y))) {
       return true;
@@ -215,11 +200,9 @@ refreshStats: function() {
   },
   playerJump: function() {
     //when the ground is a sprite, we need to test for "touching" instead of "blocked"
-    if(this.player.body.touching.down) {
-      this.player.body.velocity.y -= 100;
-    }else {
+   
       this.player.body.velocity.y -= 50;
-    }
+    
 
   },
   playerScratch: function() {
@@ -231,12 +214,13 @@ refreshStats: function() {
       this.player.alive = false;
       
       //destroy everything before player runs away so there's nothing in the way
-      this.fleas.destroy();
+      
+
       this.mounds.destroy();
 
       //We switch back to the standing version of the player
-      this.player.loadTexture('pigeon');
-      this.player.animations.play('walk', 10, true); //frame rate is faster for running
+      this.player.loadTexture('pigeon-fly');
+      this.player.animations.play('fly', 10, true); //frame rate is faster for running
       this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
       
       //...then run home
@@ -246,13 +230,14 @@ refreshStats: function() {
 
       //we want the player to run off the screen in this case
       this.game.camera.unfollow();
-
+      this.game.time.events.add(1400,this.cats.destroy(), this);
+      this.game.time.events.add(1500,this.catsD.destroy(), this);
       //go to gameover after a few miliseconds
-      this.game.time.events.add(1500, this.gameOver, this);
+      this.game.time.events.add(2000, this.gameOver, this);
     } else {
       //change image and update the body size for the physics engine
-      this.player.loadTexture('pigeon');
-      this.player.animations.play('walk', 3, true);
+      this.player.loadTexture('pigeon-fly');
+      this.player.animations.play('fly', 3, true);
       this.player.body.setSize(this.player.standDimensions.width, this.player.standDimensions.height);
     }
   },
@@ -276,42 +261,48 @@ refreshStats: function() {
 
   },
 
-  generateFleas: function() {
-    this.fleas = this.game.add.group();
-    
+  generateCats: function() {
+    this.cats = this.game.add.group();
+    var y ;
+    y=this.game.height-150;
     //enable physics in them
-    this.fleas.enableBody = true;
+    this.cats.enableBody = true;
 
     //phaser's random number generator
-    var numFleas = this.game.rnd.integerInRange(1, 5)
-    var flea;
+    var numCats = this.game.rnd.integerInRange(1, 5)
+    var cat;
 
-    for (var i = 0; i < numFleas; i++) {
+    for (var i = 0; i < numCats; i++) {
       //add sprite within an area excluding the beginning and ending
       //  of the game world so items won't suddenly appear or disappear when wrapping
       var x = this.game.rnd.integerInRange(this.game.width, this.game.world.width - this.game.width);
-      flea = this.fleas.create(x, this.game.height-115, 'flea');
-
+      cat = this.cats.create(x, y, 'cat-down');
       //physics properties
-      flea.body.velocity.x = this.game.rnd.integerInRange(-20, 0);
-      
-      flea.body.immovable = true;
-      flea.body.collideWorldBounds = false;
+      cat.body.velocity.x = this.game.rnd.integerInRange(-20, 0);
+      cat.body.immovable = true;
+      cat.body.collideWorldBounds = false;
     }
-    numFleas = this.game.rnd.integerInRange(1, 5)
-    var flea;
+  },
+  generateCatsDown: function() {
+    this.catsD = this.game.add.group();
+    var y ;
+    y=this.game.height-550;
+    //enable physics in them
+    this.catsD.enableBody = true;
 
-    for (var i = 0; i < numFleas; i++) {
+    //phaser's random number generator
+    var numCats = this.game.rnd.integerInRange(1, 5)
+    var catD;
+
+    for (var i = 0; i < numCats; i++) {
       //add sprite within an area excluding the beginning and ending
       //  of the game world so items won't suddenly appear or disappear when wrapping
       var x = this.game.rnd.integerInRange(this.game.width, this.game.world.width - this.game.width);
-      flea = this.fleas.create(x, this.game.height-415, 'flea');
-
+      catD = this.catsD.create(x, y, 'cat-top');
       //physics properties
-      flea.body.velocity.x = this.game.rnd.integerInRange(-20, 0);
-      
-      flea.body.immovable = true;
-      flea.body.collideWorldBounds = false;
+      catD.body.velocity.x = this.game.rnd.integerInRange(-20, 0);
+      catD.body.immovable = true;
+      catD.body.collideWorldBounds = false;
     }
   },
   render: function()
@@ -324,9 +315,17 @@ refreshStats: function() {
     this.game.state.start('rat');
     //game.state.start("pigeon");
     }*/
-};
+
+  };
+
 function switchTo() {
     //if (change){
     game.state.start("rat");
 //}
-}
+};
+function gameOver() {
+    message = "Your time: " + (game.time.totalElapsedSeconds() - menuTime).toFixed(2) + "s";
+    game.state.start("menu");
+
+    //this.game.state.start('pigeon');
+  };
