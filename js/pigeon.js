@@ -17,8 +17,6 @@ var pigeonState =
 
         
         //put everything in the correct order (the grass will be camoflauge),
-        //but the toy mounds have to be above that to be seen, but behind the
-        //ground so they barely stick up
         this.game.world.bringToTop(this.background1);
         this.game.world.bringToTop(this.ground);
         this.game.world.bringToTop(this.wire);
@@ -38,11 +36,7 @@ var pigeonState =
         this.wire.body.allowGravity = false;
 
 
-        /*properties when the player is digging, scratching and standing, so we can use in update()*/
-        /*var playerDigImg = this.game.cache.getImage('playerDig');
-        this.player.animations.add('dig');
-        this.player.digDimensions = {width: playerDigImg.width, height: playerDigImg.height};
-        */
+        /*properties when the player scratching (diying) and standing, so we can use in update()*/
         var playerScratchImg = this.game.cache.getImage('playerScratch');
         this.player.animations.add('scratch');
         this.player.scratchDimensions = {width: playerScratchImg.width, height: playerScratchImg.height};
@@ -70,20 +64,20 @@ var pigeonState =
         this.whineSound = this.game.add.audio('whine');
         
         
-        this.game.time.events.add(Phaser.Timer.SECOND * game.rnd.integerInRange(5, 10), switchTo, this);
+        this.game.time.events.add(Phaser.Timer.SECOND * game.rnd.integerInRange(10, 15), switchTo, this);
     },
     update: function(){
     
-    this.game.physics.arcade.collide(this.player, this.ground, this.playerHit, null, this);
+    this.game.physics.arcade.collide(this.player, this.ground, this.playerBit, null, this);
     this.game.physics.arcade.collide(this.player, this.cats, this.playerBit, null, this);
     this.game.physics.arcade.collide(this.player, this.catsD, this.playerBit, null, this);
-    this.game.physics.arcade.collide(this.player, this.wire, this.playerHit, null, this);
+    this.game.physics.arcade.collide(this.player, this.wire, this.playerBit, null, this);
 
     //only respond to keys and keep the speed if the player is alive
     //we also don't want to do anything if the player is stopped for scratching or digging
     if(this.player.alive && !this.stopped) {
       
-      this.player.body.velocity.x = 150;
+      this.player.body.velocity.x = game.rnd.integerInRange(140, 160);
       
       //We do a little math to determine whether the game world has wrapped around.
       //If so, we want to destroy everything and regenerate, so the game will remain random
@@ -141,21 +135,6 @@ refreshStats: function() {
     this.fleasText.text = this.maxScratches - this.scratches;*/
   },
 
-  playerHit: function(player, blockedLayer) {
-    if(player.body.touching.up) {
-      this.game.time.events.add(0, gameOver, this);//can add other functionality here for extra obstacles later
-    }
-    if(player.body.touching.down) {
-     this.game.time.events.add(0, gameOver, this);// alert("piso");//can add other functionality here for extra obstacles later
-    }
-    if(player.body.touching.right) {
-      //can add other functionality here for extra obstacles later
-    }
-    if(player.body.touching.right) {
-      //can add other functionality here for extra obstacles later
-    }
-  },
-
   playerBit: function(player, catBit) {
     //remove the flea that bit our player so it is no longer in the way
     catBit.destroy();
@@ -189,7 +168,7 @@ refreshStats: function() {
   playerJump: function() {
     //when the ground is a sprite, we need to test for "touching" instead of "blocked"
    
-      this.player.body.velocity.y -= 50;
+      this.player.body.velocity.y -= this.game.rnd.integerInRange(48, 53);
     
 
   },
@@ -203,9 +182,6 @@ refreshStats: function() {
       
       //destroy everything before player runs away so there's nothing in the way
       
-
-      this.mounds.destroy();
-
       //We switch back to the standing version of the player
       this.player.loadTexture('pigeon-fly');
       this.player.animations.play('fly', 10, true); //frame rate is faster for running
@@ -221,9 +197,9 @@ refreshStats: function() {
       /*this.game.time.events.add(1400,this.cats.destroy(), this);
       this.game.time.events.add(1500,this.catsD.destroy(), this);*/
       this.cats.destroy();
-      catsD.destroy();
+      this.catsD.destroy();
       //go to gameover after a few miliseconds
-      this.game.time.events.add(2000, this.gameOver, this);
+      this.game.time.events.add(1500, this.gameOver, this);
     } else {
       //change image and update the body size for the physics engine
       this.player.loadTexture('pigeon-fly');
@@ -256,7 +232,7 @@ refreshStats: function() {
   generateCatsDown: function() {
     this.catsD = this.game.add.group();
     var y ;
-    y=this.game.height-550;
+    y=this.game.height-600;
     this.catsD.enableBody = true;
     var numCats = this.game.rnd.integerInRange(1, 5)
     var catD;
