@@ -3,7 +3,7 @@ var loadState =
 	preload: function()
 	{
 		//MENU
-		game.load.image("logo", "assets/images/logoRatPigeon.png");
+		game.load.image("logoRatPigeon", "assets/images/logoRatPigeon.png");
 
 		//RAT
 		game.load.image("floor", "assets/images/floor.png");

@@ -24,8 +24,8 @@ var menuState =
 			fill: '#ffffff'}
 			);
 
-		var logo = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logo");
-		logo.anchor.setTo(0.5);
+		var logoRatPigeon = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logoRatPigeon");
+		logoRatPigeon.anchor.setTo(0.5);
 
 		var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -35,8 +35,8 @@ var menuState =
 	},
     update: function(){
         if (firstTime!=null){
-        	var logo = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logo");
-			logo.anchor.setTo(0.5);
+        	var logoRatPigeon = game.add.sprite(game.world.centerX, game.world.centerY - 100, "logoRatPigeon");
+			logoRatPigeon.anchor.setTo(0.5);
 			} else {firstTime = false;}
 	},
 
