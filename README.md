@@ -1,4 +1,6 @@
 # LUNCH.PUFFS.CLUB.CO
+# Hybrid runner of a hybrid animal, with and hybrid theme. 
+# Game build to be part of the Game Off 2018 
 Repository for games of LUNCH PUFFS CLUB CO.
 Autors: 
 
@@ -9,6 +11,13 @@ Developers
 Designer 
 
             Juan David Pulido
+
+# Game Rat-Pigeon 
+The Rat-Pigeon has accomplished to get out of his cage and now is running to freedom. 
+On his way out needs to switch between his rat and pigeon skills, running and flying to find his route out. 
+When running avoid the rat tramps around the laboratory... 
+And flying to avoids cats that obviously love the flavor of a Rat-Pigeon... 
+
 
 # Made With Phaser CE (Community Edition)
 
