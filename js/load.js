@@ -16,9 +16,8 @@ var loadState =
 	    game.load.spritesheet('playerScratch', 'assets/images/dog_scratch.png', 116, 100, 2);
 	    game.load.spritesheet('playerDig', 'assets/images/dog_dig.png', 129, 100, 2);
 	    game.load.image('ground', 'assets/images/ground.png');
-	    game.load.image('sky', 'assets/images/sky.png');
-	    game.load.image('sky1', 'assets/images/sky1.png');
-	    //game.load.image('grass', 'assets/images/grass.png');
+	    game.load.image('wire', 'assets/images/wire.png');
+	    game.load.image('sky1', 'assets/images/sky.png');
 	    game.load.audio('whine', ['assets/audio/whine.ogg', 'assets/audio/whine.mp3']);
 	    game.load.audio('bark', ['assets/audio/bark.ogg', 'assets/audio/bark.mp3']);
 	    

@@ -44,7 +44,7 @@ var menuState =
 	{
 		ratTime = 0;
 		menuTime = game.time.totalElapsedSeconds();
-		game.state.start('pigeon');
+		game.state.start('rat');
 	},
 
 };
