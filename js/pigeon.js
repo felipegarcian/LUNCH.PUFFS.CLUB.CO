@@ -3,7 +3,7 @@ var pigeonState =
      create: function(){
          //set up background and ground layer
         this.game.world.setBounds(0, 0, 3500 , this.game.height);
-        this.background1 = this.add.tileSprite(0,0,this.game.world.width,600,'sky1');
+        this.background1 = this.add.tileSprite(0,0,this.game.world.width,600,'sky');
         this.ground = this.add.tileSprite(0,this.game.height-70,this.game.world.width,70,'ground');
         this.wire = this.add.tileSprite(0,0,this.game.world.width,50,'wire');
         
@@ -43,7 +43,8 @@ var pigeonState =
         
         this.player.standDimensions = {width: this.player.width, height: this.player.height};
         this.player.anchor.setTo(0.5, 1);
-        
+        this.player.alive=true; 
+        this.stopped = false;
         //the camera will follow the player in the world
         this.game.camera.follow(this.player);
         
@@ -57,7 +58,7 @@ var pigeonState =
         this.swipe = this.game.input.activePointer;
 
         //..or clicking :)
-        game.input.mouse.capture = true;
+        this.game.input.mouse.capture = true;
 
         //sounds
         this.barkSound = this.game.add.audio('bark');
@@ -113,7 +114,8 @@ var pigeonState =
       if (this.swipe.isDown && (this.swipe.positionDown.y > this.swipe.position.y)) {
         this.playerJump();
       }
-      else if (this.cursors.up.isDown) {
+      
+      if (this.cursors.up.isDown) {
         this.playerJump();
       }
       if (this.game.input.activePointer.leftButton.isDown){
@@ -138,12 +140,7 @@ refreshStats: function() {
   playerBit: function(player, catBit) {
     //remove the flea that bit our player so it is no longer in the way
     catBit.destroy();
-   
-    
-    
-    //update our stats
-    this.scratches++;
-    this.refreshStats();
+
     
     //change sprite image
     this.player.loadTexture('playerScratch'); 
@@ -156,6 +153,9 @@ refreshStats: function() {
     this.stopped = true;
     this.player.body.velocity.x = 0;
     this.game.time.events.add(Phaser.Timer.SECOND * 2, this.playerScratch, this);
+    this.game.time.events.add(1500, gameOver, this);
+
+
   },
   checkDig: function() {
     if (this.cursors.down.isDown || (this.swipe.isDown && (this.swipe.position.y > this.swipe.positionDown.y))) {
@@ -178,10 +178,8 @@ refreshStats: function() {
     if (this.scratches >= 5) {
       //set to dead (even though our player isn't actually dead in this game, just running home)
       //doesn't affect rendering
-      this.player.alive = false;
-      
-      //destroy everything before player runs away so there's nothing in the way
-      
+      this.cats.destroy();
+      this.catsD.destroy();
       //We switch back to the standing version of the player
       this.player.loadTexture('pigeon-fly');
       this.player.animations.play('fly', 10, true); //frame rate is faster for running
@@ -194,10 +192,7 @@ refreshStats: function() {
 
       //we want the player to run off the screen in this case
       this.game.camera.unfollow();
-      /*this.game.time.events.add(1400,this.cats.destroy(), this);
-      this.game.time.events.add(1500,this.catsD.destroy(), this);*/
-      this.cats.destroy();
-      this.catsD.destroy();
+      
       //go to gameover after a few miliseconds
       this.game.time.events.add(1500, this.gameOver, this);
     } else {

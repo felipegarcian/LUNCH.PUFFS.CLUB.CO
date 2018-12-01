@@ -3,7 +3,7 @@ var loadState =
 	preload: function()
 	{
 		//MENU
-		game.load.image("logo", "assets/images/logo.png");
+		game.load.image("logo", "assets/images/logoRatPigeon.png");
 
 		//RAT
 		game.load.image("floor", "assets/images/floor.png");
@@ -17,12 +17,10 @@ var loadState =
 	    game.load.spritesheet('playerDig', 'assets/images/dog_dig.png', 129, 100, 2);
 	    game.load.image('ground', 'assets/images/ground.png');
 	    game.load.image('wire', 'assets/images/wire.png');
-	    game.load.image('sky1', 'assets/images/sky.png');
+	    game.load.image('sky', 'assets/images/sky.png');
 	    game.load.audio('whine', ['assets/audio/whine.ogg', 'assets/audio/whine.mp3']);
 	    game.load.audio('bark', ['assets/audio/bark.ogg', 'assets/audio/bark.mp3']);
 	    
-	    //from http://www.gamedevacademy.org/html5-phaser-tutorial-spacehipster-a-space-exploration-game/
-	    game.load.image('mound', 'assets/images/rock.png');
 	    
 	    
 	    game.load.image('cat-down', 'assets/images/cat-down.png', 30,30);
